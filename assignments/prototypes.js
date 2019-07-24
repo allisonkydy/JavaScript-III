@@ -220,35 +220,22 @@ const link = new Hero({
     language: 'Hylian',
 })
 
-console.log(link.attack());
-console.log(ganon.removeHealth());
-console.log(ganon.attack());
-console.log(link.removeHealth());
-console.log(ganon.attack());
-console.log(link.removeHealth());
-console.log(link.attack());
-console.log(ganon.removeHealth());
-console.log(link.attack());
-console.log(ganon.removeHealth());
-console.log(ganon.attack());
-console.log(link.removeHealth());
-console.log(ganon.attack());
-console.log(link.removeHealth());
-console.log(link.attack());
-console.log(ganon.removeHealth());
-console.log(link.attack());
-console.log(ganon.removeHealth());
-console.log(link.attack());
-console.log(ganon.removeHealth());
-console.log(ganon.attack());
-console.log(link.removeHealth());
-console.log(link.attack());
-console.log(ganon.removeHealth());
-console.log(link.attack());
-console.log(ganon.removeHealth());
-console.log(ganon.attack());
-console.log(link.removeHealth());
-console.log(link.attack());
-console.log(ganon.removeHealth());
-console.log(link.attack());
-console.log(ganon.removeHealth());
+function linkAttacks() {
+  console.log(link.attack());
+  console.log(ganon.removeHealth());
+}
+
+function ganonAttacks() {
+  console.log(ganon.attack());
+  console.log(link.removeHealth());
+}
+
+function fight() {
+  while (ganon.healthPoints > 0 && link.healthPoints > 0) {
+    const outcome = Math.floor(Math.random() * 2);
+    if (outcome) linkAttacks();
+    else ganonAttacks();
+  } 
+}
+
+fight();
