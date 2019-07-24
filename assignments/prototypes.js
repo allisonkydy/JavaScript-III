@@ -51,7 +51,7 @@ GameObject.prototype.destroy = function() {
 }
 
 
-// Character stats Constructor
+// Character Stats Constructor
 function CharacterStats(attr) {
   GameObject.call(this, attr);
   this.healthPoints = attr.healthPoints;
@@ -144,7 +144,110 @@ Humanoid.prototype.greet = function() {
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
 
-  // Stretch task: 
-  // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
-  // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
-  // * Create two new objects, one a villain and one a hero and fight it out with methods!
+// Stretch task: 
+// * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
+// * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
+// * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+// Villian Constructor
+function Villian(attr) {
+  Humanoid.call(this, attr);
+}
+
+Villian.prototype = Object.create(Humanoid.prototype);
+
+Villian.prototype.removeHealth = function() {
+  this.healthPoints -= 5;
+  if (this.healthPoints <= 0) return `${this.takeDamage()} ${this.destroy()}`;
+  else return this.takeDamage();
+}
+
+Villian.prototype.attack = function() {
+  return `${this.name} attacked with his ${this.weapons[(Math.floor(Math.random() * this.weapons.length))]}!`;
+}
+
+// Hero Constructor
+function Hero(attr) {
+  Humanoid.call(this, attr);
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+
+Hero.prototype.removeHealth = function() {
+  this.healthPoints -= 1;
+  if (this.healthPoints <= 0) return `${this.takeDamage()} ${this.destroy()}`;
+  else return this.takeDamage();
+}
+
+Hero.prototype.attack = function() {
+  return `${this.name} attacked with his ${this.weapons[(Math.floor(Math.random() * this.weapons.length))]}!`;
+}
+
+
+const ganon = new Villian({
+  createdAt: new Date(),
+    dimensions: {
+      length: 5,
+      width: 8,
+      height: 10,
+    },
+    healthPoints: 50,
+    name: 'Ganon',
+    team: 'Dark Realm',
+    weapons: [
+      'Giant Sword',
+      'Dark Magic',
+    ],
+    language: 'Gerudo',
+})
+
+const link = new Hero({
+  createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 1,
+      height: 2,
+    },
+    healthPoints: 12,
+    name: 'Link',
+    team: 'Hyrule',
+    weapons: [
+      'Master Sword',
+      'Bow',
+      'Boomerang'
+    ],
+    language: 'Hylian',
+})
+
+console.log(link.attack());
+console.log(ganon.removeHealth());
+console.log(ganon.attack());
+console.log(link.removeHealth());
+console.log(ganon.attack());
+console.log(link.removeHealth());
+console.log(link.attack());
+console.log(ganon.removeHealth());
+console.log(link.attack());
+console.log(ganon.removeHealth());
+console.log(ganon.attack());
+console.log(link.removeHealth());
+console.log(ganon.attack());
+console.log(link.removeHealth());
+console.log(link.attack());
+console.log(ganon.removeHealth());
+console.log(link.attack());
+console.log(ganon.removeHealth());
+console.log(link.attack());
+console.log(ganon.removeHealth());
+console.log(ganon.attack());
+console.log(link.removeHealth());
+console.log(link.attack());
+console.log(ganon.removeHealth());
+console.log(link.attack());
+console.log(ganon.removeHealth());
+console.log(ganon.attack());
+console.log(link.removeHealth());
+console.log(link.attack());
+console.log(ganon.removeHealth());
+console.log(link.attack());
+console.log(ganon.removeHealth());
