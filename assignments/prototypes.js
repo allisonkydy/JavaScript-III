@@ -149,6 +149,11 @@ Humanoid.prototype.greet = function() {
 // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
 // * Create two new objects, one a villain and one a hero and fight it out with methods!
 
+// Attack function
+const attack = function() {
+  return `${this.name} attacked with his ${this.weapons[(Math.floor(Math.random() * this.weapons.length))]}!`;
+}
+
 // Villian Constructor
 function Villian(attr) {
   Humanoid.call(this, attr);
@@ -162,9 +167,7 @@ Villian.prototype.removeHealth = function() {
   else return this.takeDamage();
 }
 
-Villian.prototype.attack = function() {
-  return `${this.name} attacked with his ${this.weapons[(Math.floor(Math.random() * this.weapons.length))]}!`;
-}
+Villian.prototype.attack = attack;
 
 // Hero Constructor
 function Hero(attr) {
@@ -179,9 +182,7 @@ Hero.prototype.removeHealth = function() {
   else return this.takeDamage();
 }
 
-Hero.prototype.attack = function() {
-  return `${this.name} attacked with his ${this.weapons[(Math.floor(Math.random() * this.weapons.length))]}!`;
-}
+Hero.prototype.attack = attack;
 
 
 const ganon = new Villian({
