@@ -227,8 +227,6 @@ function ganonAttacks() {
 function fight() {
   while (ganon.healthPoints > 0 && link.healthPoints > 0) {
     const outcome = Math.floor(Math.random() * 2);
-    // if (outcome) linkAttacks();
-    // else ganonAttacks();
     outcome ? linkAttacks() : ganonAttacks();
   } 
 }
