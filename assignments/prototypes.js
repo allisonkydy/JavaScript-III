@@ -39,9 +39,52 @@
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
 
+// Game Object Constructor
+function GameObject(attr) {
+  this.createdAt = attr.createdAt;
+  this.name = attr.name;
+  this.dimensions = attr.dimensions;
+}
+
+GameObject.prototype.destroy = function() {
+  return `${this.name} was removed from the game.`;
+}
+
+
+// Character Stats Constructor
+function CharacterStats(attr) {
+  GameObject.call(this, attr);
+  this.healthPoints = attr.healthPoints;
+}
+
+CharacterStats.prototype = Object.create(GameObject.prototype);
+
+CharacterStats.prototype.takeDamage = function() {
+  return `${this.name} took damage.`
+}
+
+
+// Humanoid Constructor
+function Humanoid(attr) {
+  CharacterStats.call(this, attr);
+  this.team = attr.team;
+  this.weapons = attr.weapons;
+  this.language = attr.language;
+}
+
+Humanoid.prototype = Object.create(CharacterStats.prototype);
+
+Humanoid.prototype.greet = function() {
+  return `${this.name} offers a greeting in ${this.language}`;
+}
+
+Humanoid.prototype.attack = function() {
+  return `${this.name} attacked with his ${this.weapons[(Math.floor(Math.random() * this.weapons.length))]}!`;
+}
+
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -102,9 +145,90 @@
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
 
-  // Stretch task: 
-  // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
-  // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
-  // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+// Stretch task: 
+// * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
+// * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
+// * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+
+// Villian Constructor
+function Villian(attr) {
+  Humanoid.call(this, attr);
+}
+
+Villian.prototype = Object.create(Humanoid.prototype);
+
+Villian.prototype.removeHealth = function() {
+  this.healthPoints -= 5;
+  if (this.healthPoints <= 0) return `${this.takeDamage()} ${this.destroy()}`;
+  else return this.takeDamage();
+}
+
+// Hero Constructor
+function Hero(attr) {
+  Humanoid.call(this, attr);
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+
+Hero.prototype.removeHealth = function() {
+  this.healthPoints -= 1;
+  if (this.healthPoints <= 0) return `${this.takeDamage()} ${this.destroy()}`;
+  else return this.takeDamage();
+}
+
+const ganon = new Villian({
+  createdAt: new Date(),
+    dimensions: {
+      length: 5,
+      width: 8,
+      height: 10,
+    },
+    healthPoints: 50,
+    name: 'Ganon',
+    team: 'Dark Realm',
+    weapons: [
+      'Giant Sword',
+      'Dark Magic',
+    ],
+    language: 'Gerudo',
+})
+
+const link = new Hero({
+  createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 1,
+      height: 2,
+    },
+    healthPoints: 12,
+    name: 'Link',
+    team: 'Hyrule',
+    weapons: [
+      'Master Sword',
+      'Bow',
+      'Boomerang'
+    ],
+    language: 'Hylian',
+})
+
+function linkAttacks() {
+  console.log(link.attack());
+  console.log(ganon.removeHealth());
+}
+
+function ganonAttacks() {
+  console.log(ganon.attack());
+  console.log(link.removeHealth());
+}
+
+function fight() {
+  while (ganon.healthPoints > 0 && link.healthPoints > 0) {
+    const outcome = Math.floor(Math.random() * 2);
+    outcome ? linkAttacks() : ganonAttacks();
+  } 
+}
+
+fight();
